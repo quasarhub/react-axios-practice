@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios'; // 설치해둔 axios 땡겨오기
 
 function App() {
+  const option = {
+    url: 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json',
+    method: 'GET',
+    params: {
+      key: '%REACT_APP_API_KEY%',
+      targetDt: '20220801'
+    },
+    responseType: 'json'
+  };
+
+  const callAjax = () => {
+    axios(option)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function () {
+        console.log('뭔가 이상해요!');
+      })
+      .finally(function () {
+        console.log('무조건 출력돼요!');
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={callAjax}>서버 호출</button>
     </div>
   );
 }
